@@ -7,7 +7,9 @@ Package provides javascript implementation of algorithms for graph processing
 
 * Depth First Search
 * Breadth First Search
-* Minimum Spanning Tree (Kruskal, Prim Lazy, Prim Eager)
+* Connected Components for undirected graph
+* Strongly Connected Components for directed graph
+* Minimum Spanning Tree for weighted graph (Kruskal, Prim Lazy, Prim Eager)
 * Shortest Paths (Dijkstra, Bellman-Ford, Topological Sort on DAG)
 * MaxFlow-MinCut (Ford-Fulkerson)
 
@@ -62,4 +64,33 @@ for(var v=0; v < g.V; ++v) {
      console.log('No path from ' + s + ' to ' + v);
  }
 } 
+```
+
+### Connected Components
+
+The sample code below show how to obtain the number of connected components in an undirected graph:
+
+```javascript
+jsgraphs = require('js-graph-algorithms');
+
+var g = new jsgraphs.Graph(13);
+g.addEdge(0, 5);
+g.addEdge(4, 3);
+g.addEdge(0, 1);
+g.addEdge(9, 12);
+g.addEdge(6, 4);
+g.addEdge(5, 4);
+g.addEdge(0, 2);
+g.addEdge(11, 12);
+g.addEdge(9,10);
+g.addEdge(0, 6);
+g.addEdge(7, 8);
+g.addEdge(9, 11);
+g.addEdge(5, 3); 
+
+var cc = new jsgraphs.ConnectedComponents(g);
+console.log(cc.componentCount()); // display 3
+for (var v = 0; v < g.V; ++v) {
+    console.log('id[' + v + ']: ' + cc.componentId(v));
+}
 ```
