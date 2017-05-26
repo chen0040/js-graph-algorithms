@@ -1,0 +1,63 @@
+{
+  "name": "js-graph-algorithms",
+  "version": "1.0.5",
+  "description": "Package implements data structures and algorithms for processing various types of graphs",
+  "author": "Xianshun Chen",
+  "contributors": [
+    "Xianshun Chen <xs0040@gmail.com>"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test",
+    "cover": "istanbul cover _mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+  },
+  "bin": {
+    "js-graphs": "./src/jsgraphs.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chen0040/js-graph-algorithms.git"
+  },
+  "keywords": [
+    "graph", 
+    "weighted graph", 
+    "digraph", 
+    "directed graph", 
+    "connected components", 
+    "strongly connected components", 
+    "min cut", 
+    "max flow", 
+    "dijkstra", 
+    "bellman-ford",
+    "minimum spanning tree",
+    "depth first search",
+    "breadth first search",
+    "directed cycles",
+    "topological sort",
+    "ford-fulkerson",
+    "prim",
+    "kruskal"
+  ],
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.13.1",
+    "grunt": "^1.0.1",
+    "grunt-contrib-uglify": "^3.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-mocha-test": "^0.13.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.1"
+  },
+  "bugs": {
+    "url": "https://github.com/chen0040/js-graph-algorithms/issues"
+  },
+  "homepage": "https://github.com/chen0040/js-graph-algorithms#readme"
+}
