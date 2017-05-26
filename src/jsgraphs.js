@@ -70,6 +70,69 @@ var jsgraphs = jsgraphs || {};
     
     jss.Stack = Stack;
     
+    var QueueNode = function(a) {
+        this.value = a;  
+        this.next = null;
+    };
+    
+    jss.QueueNode = QueueNode;
+    
+    var Queue = function() {
+        this.first = null;
+        this.last = null;
+        this.N = 0;
+    };
+    
+    Queue.prototype.enqueue = function(item) {
+        var oldLast = this.last;
+        this.last = new jss.QueueNode(item);
+        if(oldLast != null){
+            oldLast.next = this.last;
+        }
+        if (this.first == null) {
+            this.first = this.last;
+        }
+        this.N++;
+    };
+    
+    Queue.prototype.dequeue = function() {
+        if(this.first == null) {
+            return undefined;
+        }  
+        
+        var oldFirst = this.first;
+        var item = oldFirst.value;
+        this.first = oldFirst.next;
+        
+        if(this.first == null) {
+            this.last = null;
+        }
+        
+        this.N--;
+        
+        return item;
+    };
+    
+    Queue.prototype.size = function() {
+        return this.N;  
+    };
+    
+    Queue.prototype.isEmpty = function() {
+        return this.N == 0;
+    };
+    
+    Queue.prototype.toArray = function() {
+        var result = [];
+        var x = this.first;
+        while (x != null) {
+            result.push(x.value);
+            x = x.next;
+        }
+        return result;
+    };
+    
+    jss.Queue = Queue;
+    
 	var Graph = function (V) {
         this.V = V;
         this.adjList = [];
@@ -130,6 +193,51 @@ var jsgraphs = jsgraphs || {};
     };
     
     jss.DepthFirstSearch = DepthFirstSearch;
+    
+    var BreadthFirstSearch = function(G, s) {
+        var V = G.V;
+        this.s = s;
+        
+        var queue = new jss.Queue();
+        queue.enqueue(s);
+        this.marked = [];
+        this.edgeTo = [];
+        
+        for(var v = 0; v < V; ++v) {
+            this.marked.push(false);
+            this.edgeTo.push(-1);
+        }
+        
+        while (!queue.isEmpty()) {
+            var v = queue.dequeue();
+            this.marked[v] = true;
+            var adj_v = G.adj(v);
+            for (var i = 0; i < adj_v.length; ++i) {
+                var w = adj_v[i];
+                if(!this.marked[w]){
+                    this.edgeTo[w] = v;
+                    queue.enqueue(w);
+                }
+            }
+        }
+    };
+    
+    BreadthFirstSearch.prototype.hasPathTo = function(v) {
+        return this.marked[v];
+    };
+    
+    BreadthFirstSearch.prototype.pathTo = function(v) {
+        var path = new jss.Stack();
+        if(v == this.s) return [v];
+        
+        for(var x = v; x != this.s; x = this.edgeTo[x]) {
+            path.push(x);
+        }
+        path.push(this.s);
+        return path.toArray();
+    };
+    
+    jss.BreadthFirstSearch = BreadthFirstSearch;
 
 })(jsgraphs);
 
