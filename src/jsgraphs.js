@@ -238,6 +238,48 @@ var jsgraphs = jsgraphs || {};
     };
     
     jss.BreadthFirstSearch = BreadthFirstSearch;
+    
+    var ConnectedComponents = function(G) {
+        this.count = 0;
+        var V = G.V;
+        this.marked = [];
+        this.id = [];
+        for (var v = 0; v < V; ++v) {
+            this.marked.push(false);
+            this.id.push(-1);
+        }
+        
+        for (var v = 0; v < V; ++v) {
+            if(!this.marked[v]){
+                this.dfs(G, v);
+                this.count++;
+            }
+        }
+    };
+    
+    ConnectedComponents.prototype.dfs = function(G, v) {
+        this.marked[v] = true;
+        this.id[v] = this.count;
+        var adj_v = G.adj(v);
+        
+        for(var i = 0; i < adj_v.length; ++i){
+            var w = adj_v[i];
+            if(!this.marked[w]){
+                this.dfs(G, w);
+            }
+        }
+    };
+    
+    ConnectedComponents.prototype.componentId = function(v) {
+        return this.id[v];
+    };
+    
+    ConnectedComponents.prototype.componentCount = function(){
+        return this.count;
+    };
+    
+    
+    jss.ConnectedComponents = ConnectedComponents;
 
 })(jsgraphs);
 
