@@ -21,7 +21,7 @@ Package provides javascript implementation of algorithms for graph processing
 The sample code below shows how to create a undirected and unweighted graph:
 
 ```javascript
-jsgraphs = require('js-graph-algorithms');
+var jsgraphs = require('js-graph-algorithms');
 
 var g = new jsgraphs.Graph(6);
 g.addEdge(0, 5); // add undirected edge connecting vertex 0 to vertex 5
@@ -42,7 +42,7 @@ console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to verte
 The sample code below shows how to create a direted and unweighted graph:
 
 ```javascript
-jsgraphs = require('js-graph-algorithms');
+var jsgraphs = require('js-graph-algorithms');
 
 var g = new jsgraphs.DiGraph(13);
 g.addEdge(4,  2); // add directed edge from 4 to 2
@@ -77,7 +77,7 @@ console.log(g.adj(0)); // display the adjacency list which are vertices directed
 The sample code below show how to perform depth first search of an undirected graph
 
 ```javascript
-jsgraphs = require('js-graph-algorithms');
+var jsgraphs = require('js-graph-algorithms');
 
 var g = new jsgraphs.Graph(6);
 g.addEdge(0, 5);
@@ -107,7 +107,7 @@ for(var v=0; v < g.V; ++v) {
 The sample code below show how to obtain the number of connected components in an undirected graph:
 
 ```javascript
-jsgraphs = require('js-graph-algorithms');
+var jsgraphs = require('js-graph-algorithms');
 
 var g = new jsgraphs.Graph(13);
 g.addEdge(0, 5);
@@ -136,7 +136,7 @@ for (var v = 0; v < g.V; ++v) {
 The sample code below show how to obtain the reverse post order of a topological sort in a directed acyclic graph:
 
 ```javascript
-jsgraphs = require('js-graph-algorithms');
+var jsgraphs = require('js-graph-algorithms');
 
 var dag = new jsgraphs.DiGraph(7); // must be directed acyclic graph
 
@@ -164,7 +164,7 @@ console.log(order); // display array which is the topological sort order
 The sample code below show how to obtain the strongly connected components from a directed graph:
 
 ```javascript
-jsgraphs = require('js-graph-algorithms');
+var jsgraphs = require('js-graph-algorithms');
 
 var graph = new jsgraphs.DiGraph(13);
 graph.addEdge(4, 2);
@@ -201,7 +201,7 @@ for (var v = 0; v < graph.V; ++v) {
 The sample code below show how to obtain the minimum spanning tree from a weighted graph using Kruskal algorithm:
 
 ```javascript
-jsgraphs = require('js-graph-algorithms');
+var jsgraphs = require('js-graph-algorithms');
 var g = new jsgraphs.WeightedGraph(8);
 
 g.addEdge(new jsgraphs.Edge(0, 7, 0.16));
