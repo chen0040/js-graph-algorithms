@@ -152,6 +152,24 @@ var jsgraphs = jsgraphs || {};
     
     jss.Graph = Graph;
     
+    var DiGraph = function(V) {
+        this.V = V;
+        this.adjList = [];
+        for (var v = 0; v < V; ++v){
+            this.adjList.push([]);
+        }
+    };
+    
+    DiGraph.prototype.addEdge = function(v, w){
+        this.adjList[v].push(w);
+    };
+    
+    DiGraph.prototype.adj = function(v) {
+        return this.adjList[v];  
+    };
+    
+    jss.DiGraph = DiGraph;
+    
     var DepthFirstSearch = function(G, s) {
         this.s = s;
         var V = G.V;
@@ -280,6 +298,8 @@ var jsgraphs = jsgraphs || {};
     
     
     jss.ConnectedComponents = ConnectedComponents;
+    
+    
 
 })(jsgraphs);
 
