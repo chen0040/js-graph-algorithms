@@ -8,6 +8,7 @@ Package provides javascript implementation of algorithms for graph processing
 * Depth First Search
 * Breadth First Search
 * Connected Components for undirected graph
+* Topoloical Sort
 * Strongly Connected Components for directed graph
 * Minimum Spanning Tree for weighted graph (Kruskal, Prim Lazy, Prim Eager)
 * Shortest Paths (Dijkstra, Bellman-Ford, Topological Sort on DAG)
@@ -34,6 +35,41 @@ g.addEdge(0, 2);
 
 console.log(g.V); // display 6, which is the number of vertices in g
 console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0
+```
+
+### Create directed unweighted graph
+
+The sample code below shows how to create a direted and unweighted graph:
+
+```javascript
+jsgraphs = require('js-graph-algorithms');
+
+var g = new jsgraphs.DiGraph(13);
+g.addEdge(4,  2);
+g.addEdge(2,  3);
+g.addEdge(3,  2);
+g.addEdge(6,  0);
+g.addEdge(0,  1);
+g.addEdge(2,  0);
+g.addEdge(11, 12);
+g.addEdge(12,  9);
+g.addEdge(9, 10);
+g.addEdge(9, 11);
+g.addEdge(7,  9);
+g.addEdge(10, 12);
+g.addEdge(11,  4);
+g.addEdge(4,  3);
+g.addEdge(3,  5);
+g.addEdge(6,  8);
+g.addEdge(8,  6);
+g.addEdge(5,  4);
+g.addEdge(0,  5);
+g.addEdge(6,  4);
+g.addEdge(6,  9);
+g.addEdge(7,  6);
+
+console.log(g.V); // display 13, which is the number of vertices in g
+console.log(g.adj(0)); // display the adjacency list which are vertices directed from vertex 0
 ```
 
 ### Depth First Search
@@ -93,4 +129,32 @@ console.log(cc.componentCount()); // display 3
 for (var v = 0; v < g.V; ++v) {
     console.log('id[' + v + ']: ' + cc.componentId(v));
 }
+```
+
+### Topological Sort
+
+The sample code below show how to obtain the reverse post order of a topological sort in a directed acyclic graph:
+
+```javascript
+jsgraphs = require('js-graph-algorithms');
+
+var dag = new jsgraphs.DiGraph(7); // must be directed acyclic graph
+
+dag.addEdge(0, 5);
+dag.addEdge(0, 2);
+dag.addEdge(0, 1);
+dag.addEdge(3, 6);
+dag.addEdge(3, 5);
+dag.addEdge(3, 4);
+dag.addEdge(5, 4);
+dag.addEdge(6, 4);
+dag.addEdge(6, 0);
+dag.addEdge(3, 2);
+dag.addEdge(1, 4);
+
+var ts = new jsgraphs.TopologicalSort(dag);
+
+var order = ts.order();
+console.log(order); // display array which is the topological sort order
+
 ```

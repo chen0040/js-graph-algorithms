@@ -299,7 +299,38 @@ var jsgraphs = jsgraphs || {};
     
     jss.ConnectedComponents = ConnectedComponents;
     
+    var TopologicalSort = function(G) {
+        this.postOrder = new jss.Stack();
+        this.marked = [];
+        var V = G.V;
+        for (var v = 0; v < V; ++v) {
+            this.marked.push(false);
+        }
+        
+        for (var v = 0; v < V; ++v) {
+            if(!this.marked[v]) {
+                this.dfs(G, v);
+            }
+        }
+    };
     
+    TopologicalSort.prototype.dfs = function(G, v) {
+        this.marked[v] = true;
+        var adj_v = G.adj(v);
+        for (var i = 0; i < adj_v.length; ++i) {
+            var w = adj_v[i];
+            if(!this.marked[w]){
+                this.dfs(G, w);
+            }
+        }
+        this.postOrder.push(v);
+    };
+    
+    TopologicalSort.prototype.order = function() {
+        return this.postOrder.toArray();  
+    };
+    
+    jss.TopologicalSort = TopologicalSort;
 
 })(jsgraphs);
 
