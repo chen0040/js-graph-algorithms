@@ -182,6 +182,52 @@ var jsgraphs = jsgraphs || {};
     
     jss.DiGraph = DiGraph;
     
+    var Edge = function(v, w, weight) {
+        this.v = v;
+        this.w = w;
+        this.weight = weight;
+    };
+    
+    Edge.prototype.either = function() {
+        return this.v;
+    };
+    
+    Edge.prototype.other = function(x) {
+        return x == this.v ? this.w : this.v;
+    };
+    
+    Edge.prototype.from = function() {
+        return this.v;
+    };
+    
+    Edge.prototype.to = function() {
+        return this.w;
+    };
+    
+    jss.Edge = Edge;
+    
+    var WeightedGraph = function(V) {
+        this.V = V;
+        this.adjList = [];
+        
+        for ( var v = 0; v < V; ++v) {
+            this.adjList.push([]);
+        }
+    };
+    
+    WeightedGraph.prototype.adj = function(v) {
+        return this.adjList[v];  
+    };
+    
+    WeightedGraph.prototype.addEdge = function(e) {
+        var v = e.either();
+        var w = e.other(v);
+        this.adjList[v].push(e);
+        this.adjList[w].push(e);
+    };
+    
+    jss.WeightedGraph = WeightedGraph;
+    
     var DepthFirstSearch = function(G, s) {
         this.s = s;
         var V = G.V;
