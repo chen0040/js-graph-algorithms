@@ -168,6 +168,18 @@ var jsgraphs = jsgraphs || {};
         return this.adjList[v];  
     };
     
+    DiGraph.prototype.reverse = function(){
+        var g = new DiGraph(this.V);
+        for (var v = 0; v < this.V; ++v) {
+            var adj_v = this.adjList[v];
+            for (var i = 0; i < adj_v.length; ++i){
+                var w = adj_v[i];
+                g.addEdge(w, v);
+            }
+        }
+        return g;
+    };
+    
     jss.DiGraph = DiGraph;
     
     var DepthFirstSearch = function(G, s) {
@@ -331,6 +343,50 @@ var jsgraphs = jsgraphs || {};
     };
     
     jss.TopologicalSort = TopologicalSort;
+    
+    var StronglyConnectedComponents = function(G) {
+        var V = G.V;
+        this.count = 0;
+        this.marked = [];
+        this.id = [];
+        
+        for(var v = 0; v < V; ++v) {
+            this.marked.push(false);
+            this.id.push(-1);
+        }
+        
+        var order = new jss.TopologicalSort(G.reverse()).order();
+        for( var i = 0; i < order.length; ++i) {
+            var v = order[i];
+            if(!this.marked[v]){
+                this.dfs(G, v);
+                this.count++;
+            }
+        }
+    };
+    
+    StronglyConnectedComponents.prototype.dfs = function (G, v) {
+        this.marked[v] = true;
+        this.id[v] = this.count;
+        var adj_v = G.adj(v);
+        for (var i = 0; i < adj_v.length; ++i){
+            var w = adj_v[i];
+            if(!this.marked[w]){
+                this.dfs(G, w);
+            }
+        }
+    };
+    
+    
+    StronglyConnectedComponents.prototype.componentId = function(v) {
+        return this.id[v];
+    };
+    
+    StronglyConnectedComponents.prototype.componentCount = function(){
+        return this.count;
+    };
+    
+    jss.StronglyConnectedComponents = StronglyConnectedComponents;
 
 })(jsgraphs);
 
