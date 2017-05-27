@@ -72,6 +72,62 @@ console.log(g.V); // display 13, which is the number of vertices in g
 console.log(g.adj(0)); // display the adjacency list which are vertices directed from vertex 0
 ```
 
+### Create undirected weighted graph
+
+The sample code below shows show to create undirected weighted graph:
+
+```javascript
+var jsgraphs = require('js-graph-algorithms');
+var g = new jsgraphs.WeightedGraph(8);
+g.addEdge(new jsgraphs.Edge(0, 7, 0.16));
+g.addEdge(new jsgraphs.Edge(2, 3, 0.17));
+g.addEdge(new jsgraphs.Edge(1, 7, 0.19));
+g.addEdge(new jsgraphs.Edge(0, 2, 0.26));
+g.addEdge(new jsgraphs.Edge(5, 7, 0.28));
+g.addEdge(new jsgraphs.Edge(1, 3, 0.29));
+g.addEdge(new jsgraphs.Edge(1, 5, 0.32));
+g.addEdge(new jsgraphs.Edge(2, 7, 0.34));
+g.addEdge(new jsgraphs.Edge(4, 5, 0.35));
+g.addEdge(new jsgraphs.Edge(1, 2, 0.36));
+g.addEdge(new jsgraphs.Edge(4, 7, 0.37));
+g.addEdge(new jsgraphs.Edge(0, 4, 0.38));
+g.addEdge(new jsgraphs.Edge(6, 2, 0.4));
+g.addEdge(new jsgraphs.Edge(3, 6, 0.52));
+g.addEdge(new jsgraphs.Edge(6, 0, 0.58));
+g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
+
+console.log(g.V); // display 13, which is the number of vertices in g
+console.log(g.adj(0)); // display the adjacency list which are undirected edges connected to vertex 0
+```
+
+### Create directed weighted graph
+
+The sample code below shows show to create directed weighted graph:
+
+```javascript
+var jsgraphs = require('js-graph-algorithms');
+var g = new jsgraphs.WeightedDiGraph(8);
+g.addEdge(new jsgraphs.Edge(0, 7, 0.16));
+g.addEdge(new jsgraphs.Edge(2, 3, 0.17));
+g.addEdge(new jsgraphs.Edge(1, 7, 0.19));
+g.addEdge(new jsgraphs.Edge(0, 2, 0.26));
+g.addEdge(new jsgraphs.Edge(5, 7, 0.28));
+g.addEdge(new jsgraphs.Edge(1, 3, 0.29));
+g.addEdge(new jsgraphs.Edge(1, 5, 0.32));
+g.addEdge(new jsgraphs.Edge(2, 7, 0.34));
+g.addEdge(new jsgraphs.Edge(4, 5, 0.35));
+g.addEdge(new jsgraphs.Edge(1, 2, 0.36));
+g.addEdge(new jsgraphs.Edge(4, 7, 0.37));
+g.addEdge(new jsgraphs.Edge(0, 4, 0.38));
+g.addEdge(new jsgraphs.Edge(6, 2, 0.4));
+g.addEdge(new jsgraphs.Edge(3, 6, 0.52));
+g.addEdge(new jsgraphs.Edge(6, 0, 0.58));
+g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
+
+console.log(g.V); // display 13, which is the number of vertices in g
+console.log(g.adj(0)); // display the adjacency list which are directed edges from vertex 0
+```
+
 ### Depth First Search
 
 The sample code below show how to perform depth first search of an undirected graph
@@ -257,6 +313,41 @@ g.addEdge(new jsgraphs.Edge(6, 0, 0.58));
 g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
 
 var prim = new jsgraphs.LazyPrimMST(g); 
+var mst = prim.mst;
+for(var i=0; i < mst.length; ++i) {
+    var e = mst[i];
+    var v = e.either();
+    var w = e.other(v);
+    console.log('(' + v + ', ' + w + '): ' + e.weight);
+}
+```
+
+### Use Eager Prim algorithm to find the minimum spanning tree of a weighted graph
+
+The sample code below show how to obtain the minimum spanning tree from a weighted graph using Eager Prim algorithm:
+
+```javascript
+var jsgraphs = require('js-graph-algorithms');
+var g = new jsgraphs.WeightedGraph(8);
+
+g.addEdge(new jsgraphs.Edge(0, 7, 0.16));
+g.addEdge(new jsgraphs.Edge(2, 3, 0.17));
+g.addEdge(new jsgraphs.Edge(1, 7, 0.19));
+g.addEdge(new jsgraphs.Edge(0, 2, 0.26));
+g.addEdge(new jsgraphs.Edge(5, 7, 0.28));
+g.addEdge(new jsgraphs.Edge(1, 3, 0.29));
+g.addEdge(new jsgraphs.Edge(1, 5, 0.32));
+g.addEdge(new jsgraphs.Edge(2, 7, 0.34));
+g.addEdge(new jsgraphs.Edge(4, 5, 0.35));
+g.addEdge(new jsgraphs.Edge(1, 2, 0.36));
+g.addEdge(new jsgraphs.Edge(4, 7, 0.37));
+g.addEdge(new jsgraphs.Edge(0, 4, 0.38));
+g.addEdge(new jsgraphs.Edge(6, 2, 0.4));
+g.addEdge(new jsgraphs.Edge(3, 6, 0.52));
+g.addEdge(new jsgraphs.Edge(6, 0, 0.58));
+g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
+
+var prim = new jsgraphs.EagerPrimMST(g); 
 var mst = prim.mst;
 for(var i=0; i < mst.length; ++i) {
     var e = mst[i];

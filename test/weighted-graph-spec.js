@@ -40,6 +40,12 @@ describe("Create various types of Weighted Graphs", function() {
             
             expect(found).to.equal(true);
         }
+        
+        var edgeCount = 0;
+        for (var v = 0; v < g.V; ++v) {
+            edgeCount+=g.adj(v).length;
+        }
+        expect(edgeCount).to.equal(32);
     });
   });
 

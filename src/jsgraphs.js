@@ -437,6 +437,19 @@ var jsgraphs = jsgraphs || {};
     
     jss.WeightedGraph = WeightedGraph;
     
+    var WeightedDiGraph = function(V) {
+        WeightedGraph.call(this, V);
+    };
+    
+    WeightedDiGraph.prototype = Object.create(jss.WeightedGraph.prototype);
+    
+    WeightedDiGraph.prototype.addEdge = function(e) {
+        var v = e.from();
+        this.adjList[v].push(e);
+    };
+    
+    jss.WeightedDiGraph = WeightedDiGraph;
+    
     var DepthFirstSearch = function(G, s) {
         this.s = s;
         var V = G.V;
@@ -758,6 +771,79 @@ var jsgraphs = jsgraphs || {};
     };
     
     jss.EagerPrimMST = EagerPrimMST;
+    
+    var Dijkstra = function(G, s) {
+        var V = G.V;
+        this.s = s;
+        this.marked = [];
+        this.edgeTo = [];
+        this.cost = [];
+        this.pq = new jss.IndexMinPQ(V, function(cost1, cost2){
+            return cost1, cost2;
+        });
+        
+        for(var v =0; v < V; ++v){
+            this.marked.push(false);
+            this.edgeTo.push(null);
+            this.cost.push(Number.MAX_VALUE);
+        }
+        
+        this.cost[s] = 0;
+        
+        this.pq.insert(s, this.cost[s]);
+        
+        while(!this.pq.isEmpty()) {
+            var v = this.pq.delMin();
+            this.marked[v] = true;
+            var adj_v = G.adj(v);
+            for(var i = 0; i < adj_v.length; ++i) {
+                var e = adj_v[i];
+                this.relax(e);
+            }
+        }
+        
+    };
+    
+        
+    
+    
+    Dijkstra.prototype.relax = function(e) {
+        
+        var v = e.from();
+        var w = e.to();
+        
+        if(this.cost[w] > this.cost[v] + e.weight) {
+            this.cost[w] = this.cost[v] + e.weight;
+            this.edgeTo[w] = e;
+            if(this.pq.containsIndex(w)){
+                this.pq.decreaseKey(w, this.cost[w]);
+            } else {
+                this.pq.insert(w, this.cost[w]);
+            }
+        }
+    };
+    
+
+    
+    Dijkstra.prototype.hasPathTo = function(v) {
+        return this.marked[v];  
+    };
+
+    
+    Dijkstra.prototype.pathTo = function(v) {
+        var path = new jss.Stack();
+        for(var x = v; x != this.s; x = this.edgeTo[x].from()) {
+            path.push(this.edgeTo[x]);
+        }  
+        return path.toArray();
+    };
+    
+    Dijkstra.prototype.distanceTo = function(v) {
+        return this.cost[v];  
+    };
+    
+    
+    jss.Dijkstra = Dijkstra;
 
 })(jsgraphs);
 
