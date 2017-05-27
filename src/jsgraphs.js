@@ -240,6 +240,100 @@ var jsgraphs = jsgraphs || {};
     
     jss.QuickUnion = QuickUnion;
     
+    var IndexMinPQ = function(N, compare) {
+        this.keys = [];
+        this.pq = [];
+        this.qp = []; // positions of key in pq
+        for(var i = 0; i <= N; ++i) {
+            this.keys.push(null);
+            this.pq.push(0);
+            this.qp.push(-1);
+        }
+        this.N = 0;
+        
+        if(!compare) {
+            compare = function(a1, a2) {
+                return a1 - a2;  
+            };
+        }
+        this.compare = compare;
+    };
+    
+    IndexMinPQ.prototype.insert = function (index, key) {
+        this.keys[index] = key;
+        
+        this.pq[++this.N] = index;
+        this.qp[index] = this.N;
+        this.swim(this.N);
+    };
+    
+    IndexMinPQ.prototype.decreaseKey = function(index, key) {
+        if(jss.less(key, this.keys[index], this.compare)){
+            this.keys[index] = key;
+            this.swim(this.qp[index]);
+        }
+    };
+    
+    IndexMinPQ.prototype.minKey = function() {
+        return this.keys[this.pq[1]];  
+    };
+    
+    IndexMinPQ.prototype.min = function() {
+        return this.pq[1];  
+    };
+    
+    IndexMinPQ.prototype.delMin = function() {
+        var key = this.pq[1];
+        jss.exchange(this.pq, 1, this.N);
+        this.qp[this.pq[1]] = 1;
+        
+        this.qp[this.pq[this.N]] = -1;
+        this.keys[this.pq[this.N]] = null;
+    
+        this.N--;
+        
+        this.sink(1);
+        
+        return key;
+    };
+    
+    IndexMinPQ.prototype.swim = function (k) {
+        while( k > 1) {
+            var parent = Math.floor(k / 2);
+            if(jss.less(this.keys[this.pq[k]], this.keys[this.pq[parent]], this.compare)){
+                jss.exchange(this.pq, k, parent);
+                this.qp[this.pq[k]] = k;
+                this.qp[this.pq[parent]] = parent;
+                k = parent;
+            } else {
+                break;
+            }
+        }  
+    };
+    
+    IndexMinPQ.prototype.sink = function (k) {
+        while(2 * k <= this.N) {
+            var child = k * 2;
+            if(child < this.N && jss.less(this.keys[this.pq[child+1]], this.keys[this.pq[child]]), this.compare){
+                child++;
+            }
+            if(jss.less(this.keys[this.pq[child]], this.keys[this.pq[k]], this.compare)) {
+                jss.exchange(this.pq, k, child);
+                this.qp[this.pq[k]] = k;
+                this.qp[this.pq[child]] = child;
+                k = child;
+            } else {
+                break;
+            }
+        }  
+    };
+    
+    IndexMinPQ.prototype.containsIndex = function (index) {
+        return this.qp[index] != -1;  
+    };
+    
+    jss.IndexMinPQ = IndexMinPQ;
+    
 	var Graph = function (V) {
         this.V = V;
         this.adjList = [];
