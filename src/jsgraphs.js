@@ -448,6 +448,19 @@ var jsgraphs = jsgraphs || {};
         this.adjList[v].push(e);
     };
     
+    WeightedDiGraph.prototype.toDiGraph = function() {
+        var g = new jss.DiGraph(this.V);
+        for(var v = 0; v < this.V; ++v) {
+            var adj_v = this.adjList[v];
+            for (var i =0; i < adj_v.length; ++i) {
+                var e = adj_v[i];
+                var w = e.other(v);
+                g.addEdge(v, w);
+            }
+        }
+        return g;
+    };
+    
     jss.WeightedDiGraph = WeightedDiGraph;
     
     var DepthFirstSearch = function(G, s) {
@@ -904,6 +917,69 @@ var jsgraphs = jsgraphs || {};
     };
     
     jss.BellmanFord = BellmanFord;
+    
+    var TopologicalSortShortestPaths = function(G, s) {
+        var V = G.V;
+        this.s = s;
+        this.marked = [];
+        this.edgeTo = [];
+        this.cost = [];
+        
+        
+        for(var v =0; v < V; ++v){
+            this.marked.push(false);
+            this.edgeTo.push(null);
+            this.cost.push(Number.MAX_VALUE);
+        }
+        
+        this.cost[s] = 0;
+        this.marked[s] = true;
+        
+        var order = new jss.TopologicalSort(G.toDiGraph()).order();
+        
+        
+        for(var j = 0; j < order.length; ++j){
+            var v = order[j];
+            var adj_v = G.adj(v);
+            for(var i = 0; i < adj_v.length; ++i) {
+                var e = adj_v[i];
+                this.relax(e);
+            }
+        }
+        
+        
+    };
+    
+    TopologicalSortShortestPaths.prototype.relax = function(e) {
+        
+        var v = e.from();
+        var w = e.to();
+        
+        if(this.cost[w] > this.cost[v] + e.weight) {
+            this.cost[w] = this.cost[v] + e.weight;
+            this.marked[w] = true;
+            this.edgeTo[w] = e;
+        }
+    };
+    
+    TopologicalSortShortestPaths.prototype.hasPathTo = function(v) {
+        return this.marked[v];  
+    };
+
+    
+    TopologicalSortShortestPaths.prototype.pathTo = function(v) {
+        var path = new jss.Stack();
+        for(var x = v; x != this.s; x = this.edgeTo[x].from()) {
+            path.push(this.edgeTo[x]);
+        }  
+        return path.toArray();
+    };
+    
+    TopologicalSortShortestPaths.prototype.distanceTo = function(v) {
+        return this.cost[v];  
+    };
+    
+    jss.TopologicalSortShortestPaths = TopologicalSortShortestPaths;
 
 })(jsgraphs);
 
