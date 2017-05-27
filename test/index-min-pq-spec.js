@@ -18,7 +18,10 @@ describe('Index MinPQ', function(){
         pq.decreaseKey(9, 10.0);
         expect(pq.minKey()).to.equal(10.0);
         expect(pq.min()).to.equal(9);
+        expect(pq.size()).to.equal(2);
+        expect(pq.isEmpty()).to.equal(false);
         expect(pq.delMin()).to.equal(9);
         expect(pq.delMin()).to.equal(10);
+        expect(pq.isEmpty()).to.equal(true);
     });
 });

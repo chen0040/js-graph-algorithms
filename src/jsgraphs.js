@@ -255,7 +255,7 @@ var jsgraphs = jsgraphs || {};
             compare = function(a1, a2) {
                 return a1 - a2;  
             };
-        }
+        } 
         this.compare = compare;
     };
     
@@ -314,7 +314,7 @@ var jsgraphs = jsgraphs || {};
     IndexMinPQ.prototype.sink = function (k) {
         while(2 * k <= this.N) {
             var child = k * 2;
-            if(child < this.N && jss.less(this.keys[this.pq[child+1]], this.keys[this.pq[child]]), this.compare){
+            if(child < this.N && jss.less(this.keys[this.pq[child+1]], this.keys[this.pq[child]], this.compare)){
                 child++;
             }
             if(jss.less(this.keys[this.pq[child]], this.keys[this.pq[k]], this.compare)) {
@@ -331,6 +331,14 @@ var jsgraphs = jsgraphs || {};
     IndexMinPQ.prototype.containsIndex = function (index) {
         return this.qp[index] != -1;  
     };
+    
+    IndexMinPQ.prototype.isEmpty = function() {
+        return this.N == 0;  
+    };
+    
+    IndexMinPQ.prototype.size = function() {
+        return this.N;
+    }
     
     jss.IndexMinPQ = IndexMinPQ;
     
@@ -708,6 +716,48 @@ var jsgraphs = jsgraphs || {};
     };
     
     jss.LazyPrimMST = LazyPrimMST;
+    
+    var EagerPrimMST = function(G) {
+        var V = G.V;
+        this.pq = new jss.IndexMinPQ(V, function(e1, e2) {
+            return e1.weight - e2.weight;
+        });
+        this.marked = [];
+        for(var v = 0; v < V; ++v) {
+            this.marked.push(false);
+        }
+        this.mst = [];
+        this.visit(G, 0);
+        while(!this.pq.isEmpty() && this.mst.length < V-1) {
+            var e = this.pq.minKey();
+            var v = this.pq.delMin();
+            
+            this.mst.push(e);
+            
+            var w = e.other(v);
+            
+            if(!this.marked[w]){
+                this.visit(G, w);
+            }
+            
+        }
+    };
+    
+    EagerPrimMST.prototype.visit = function(G, v) {
+        this.marked[v]  = true;
+        var adj_v = G.adj(v);
+        for(var i = 0; i < adj_v.length; ++i) {
+            var e = adj_v[i];
+            var w = e.other(v);
+            if(this.pq.containsIndex(w)){
+                this.pq.decreaseKey(w, e);
+            } else {
+                this.pq.insert(w, e);
+            }
+        }
+    };
+    
+    jss.EagerPrimMST = EagerPrimMST;
 
 })(jsgraphs);
 
