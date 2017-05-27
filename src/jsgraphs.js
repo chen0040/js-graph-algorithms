@@ -844,6 +844,66 @@ var jsgraphs = jsgraphs || {};
     
     
     jss.Dijkstra = Dijkstra;
+    
+    var BellmanFord = function(G, s) {
+        var V = G.V;
+        this.s = s;
+        this.marked = [];
+        this.edgeTo = [];
+        this.cost = [];
+        
+        
+        for(var v =0; v < V; ++v){
+            this.marked.push(false);
+            this.edgeTo.push(null);
+            this.cost.push(Number.MAX_VALUE);
+        }
+        
+        this.cost[s] = 0;
+        this.marked[s] = true;
+        
+        for(var j = 0; j < V; ++j) {
+            for(var v = 0; v < V; ++v){
+                var adj_v = G.adj(v);
+                for(var i = 0; i < adj_v.length; ++i) {
+                    var e = adj_v[i];
+                    this.relax(e);
+                }
+            }
+        }
+        
+    };
+    
+    BellmanFord.prototype.relax = function(e) {
+        
+        var v = e.from();
+        var w = e.to();
+        
+        if(this.cost[w] > this.cost[v] + e.weight) {
+            this.cost[w] = this.cost[v] + e.weight;
+            this.marked[w] = true;
+            this.edgeTo[w] = e;
+        }
+    };
+    
+    BellmanFord.prototype.hasPathTo = function(v) {
+        return this.marked[v];  
+    };
+
+    
+    BellmanFord.prototype.pathTo = function(v) {
+        var path = new jss.Stack();
+        for(var x = v; x != this.s; x = this.edgeTo[x].from()) {
+            path.push(this.edgeTo[x]);
+        }  
+        return path.toArray();
+    };
+    
+    BellmanFord.prototype.distanceTo = function(v) {
+        return this.cost[v];  
+    };
+    
+    jss.BellmanFord = BellmanFord;
 
 })(jsgraphs);
 
