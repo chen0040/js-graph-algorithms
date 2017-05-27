@@ -575,6 +575,45 @@ var jsgraphs = jsgraphs || {};
     
     
     jss.KruskalMST = KruskalMST;
+    
+    var LazyPrimMST = function(G) {
+        var V = G.V;
+        this.marked = [];
+        for( var v = 0; v < V; ++v) {
+            this.marked.push(false);
+        }
+        
+        this.pq = new jss.MinPQ(function(e1, e2){
+            return e1.weight - e2.weight;
+        });
+        
+        this.mst = [];
+        
+        this.visit(G, 0);
+        
+        while(!this.pq.isEmpty() && this.mst.length < V-1) {
+            var e = this.pq.delMin();
+            var v = e.either();
+            var w = e.other(v);
+            if(this.marked[v] && this.marked[w]) continue;
+            this.mst.push(e);
+            if(!this.marked[v]) this.visit(G, v);
+            if(!this.marked[w]) this.visit(G, w);
+        }
+    };
+    
+    LazyPrimMST.prototype.visit = function(G, v) {
+        this.marked[v]  = true;
+        var adj_v = G.adj(v);
+        for (var i = 0; i < adj_v.length; ++i) {
+            var e = adj_v[i];
+            if(!this.marked[e.other(v)]){
+                this.pq.enqueue(e);
+            }
+        }
+    };
+    
+    jss.LazyPrimMST = LazyPrimMST;
 
 })(jsgraphs);
 
