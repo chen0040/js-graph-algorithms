@@ -463,6 +463,65 @@ var jsgraphs = jsgraphs || {};
     
     jss.WeightedDiGraph = WeightedDiGraph;
     
+    var FlowEdge = function(v, w, capacity) {
+        this.v = v;
+        this.w = w;
+        this.capacity = capacity;
+        this.flow = 0;
+    };
+    
+    FlowEdge.prototype.residualCapacityTo = function (x) {
+        if(x == this.v) {
+            return this.flow;
+        } else {
+            return this.capacity - this.flow;
+        }
+    };
+    
+    FlowEdge.prototype.addResidualFlowTo = function (x, deltaFlow) {
+        if(x == this.v) {
+            this.flow -= deltaFlow;
+        } else if(x == this.w) {
+            this.flow += deltaFlow;
+        }
+    };
+    
+    FlowEdge.prototype.from = function() {
+        return this.v;
+    };
+    
+    FlowEdge.prototype.to = function() {
+        return this.w;
+    };
+    
+    FlowEdge.prototype.other = function(x) {
+        return x == this.v ? this.w : this.v;
+    }
+    
+    
+    jss.FlowEdge = FlowEdge;
+    
+    var FlowNetwork = function(V) {
+        this.V = V;
+        this.adjList = [];
+        for(var v = 0; v < V; ++v) {
+            this.adjList.push([]);
+        }
+    };
+    
+    FlowNetwork.prototype.addEdge = function(e) {
+        var v = e.from();
+        this.adjList[v].push(e);
+        var w = e.other(v);
+        this.adjList[w].push(e);
+    };
+    
+    FlowNetwork.prototype.adj = function(v) {
+        return this.adjList[v];  
+    };
+    
+    jss.FlowNetwork = FlowNetwork;
+    
     var DepthFirstSearch = function(G, s) {
         this.s = s;
         var V = G.V;
@@ -980,6 +1039,60 @@ var jsgraphs = jsgraphs || {};
     };
     
     jss.TopologicalSortShortestPaths = TopologicalSortShortestPaths;
+    
+    var FordFulkerson = function(G, s, t) {
+        this.value = 0;
+        var V = G.V;
+        var bottle = Numbers.MAX_VALUE;
+        this.marked = null;
+        this.edgeTo = null;
+        this.s = s;
+        this.t = t;
+        while(this.hasAugmentedPath(G)){
+            
+            for(var x = this.t; x != this.s; x = this.edgeTo[x].from()) {
+                bottle = Math.min(bottle, this.edgeTo[x].residualCapacityTo(x));
+            }
+            
+            for(var x = this.t; x != this.s; x = this.edgeTo[x].from()) {
+                this.edgeTo[x].addResidualFlowTo(x, bottle);
+            }
+            
+            this.value += bottle;
+        }
+    };
+    
+    FordFulkerson.prototype.hasAugmentedPath = function(G) {
+        var V = G.V;
+        this.marked = [];
+        this.edgeTo = [];
+        for(var v = 0; v < V; ++v) {
+            this.marked.push(false);
+            this.edgeTo.push(null);
+        }
+        
+        var queue = new jss.Queue();
+        queue.push(this.s);
+        
+        while(!queue.isEmpty()){
+            var v = queue.dequeue();
+            var adj_v = G.adj(v);
+            this.marked[v] = true;
+            for (var i = 0; i < adj_v.length; ++i) {
+                var e = adj_v[i];
+                var w = e.other(v);
+                if(e.residualCapacityTo(v) > 0){
+                    if(w == this.t){
+                        return true;
+                    }
+                    this.edgeTo[w] = e;
+                    queue.push(w);
+                }
+            }
+        }
+        
+        return false;
+    };
 
 })(jsgraphs);
 

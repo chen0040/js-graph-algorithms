@@ -14,6 +14,12 @@ Package provides javascript implementation of algorithms for graph processing
 * Shortest Paths (Dijkstra, Bellman-Ford, Topological Sort on DAG)
 * MaxFlow-MinCut (Ford-Fulkerson)
 
+# Install
+
+```bash
+npm install js-graph-algorithms
+```
+
 # Usage
 
 ### Create an undirected unweighted graph
