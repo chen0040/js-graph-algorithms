@@ -1043,7 +1043,7 @@ var jsgraphs = jsgraphs || {};
     var FordFulkerson = function(G, s, t) {
         this.value = 0;
         var V = G.V;
-        var bottle = Numbers.MAX_VALUE;
+        var bottle = Number.MAX_VALUE;
         this.marked = null;
         this.edgeTo = null;
         this.s = s;
@@ -1057,6 +1057,7 @@ var jsgraphs = jsgraphs || {};
             for(var x = this.t; x != this.s; x = this.edgeTo[x].from()) {
                 this.edgeTo[x].addResidualFlowTo(x, bottle);
             }
+            
             
             this.value += bottle;
         }
@@ -1072,28 +1073,48 @@ var jsgraphs = jsgraphs || {};
         }
         
         var queue = new jss.Queue();
-        queue.push(this.s);
+        queue.enqueue(this.s);
         
+        this.marked[this.s] = true;
         while(!queue.isEmpty()){
             var v = queue.dequeue();
             var adj_v = G.adj(v);
-            this.marked[v] = true;
+            
             for (var i = 0; i < adj_v.length; ++i) {
                 var e = adj_v[i];
                 var w = e.other(v);
-                if(e.residualCapacityTo(v) > 0){
+                if(!this.marked[w] && e.residualCapacityTo(w) > 0){
+                    this.edgeTo[w] = e;
+                    this.marked[w] = true;
                     if(w == this.t){
                         return true;
                     }
-                    this.edgeTo[w] = e;
-                    queue.push(w);
+                    
+                    queue.enqueue(w);
                 }
             }
         }
         
         return false;
     };
+    
+    FordFulkerson.prototype.minCut = function(G) {
+        var cuts = [];
+        var V = G.V;
+        for(var v = 0; v < V; ++v){
+            var adj_v = G.adj(v);
+            for(var i = 0; i < adj_v.length; ++i) {
+                var e = adj_v[i];
+                if(e.from() == v && e.residualCapacityTo(e.other(v)) == 0) {
+                    cuts.push(e);
+                }
+            }
+        }
+        
+        return cuts;
+    };
 
+    jss.FordFulkerson = FordFulkerson;
 })(jsgraphs);
 
 if(module) {
