@@ -1117,6 +1117,7 @@ var jsgraphs = jsgraphs || {};
     jss.FordFulkerson = FordFulkerson;
 })(jsgraphs);
 
+var module = module || {};
 if(module) {
 	module.exports = jsgraphs;
 }
