@@ -24,7 +24,7 @@ npm install js-graph-algorithms
 
 ### Create an undirected unweighted graph
 
-The sample code below shows how to create a undirected and unweighted graph (HTML DEMO at [HERE](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-graph.html):
+The sample code below shows how to create a undirected and unweighted graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-graph.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
@@ -48,7 +48,7 @@ console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to verte
 
 ### Create directed unweighted graph
 
-The sample code below shows how to create a direted and unweighted graph:
+The sample code below shows how to create a direted and unweighted graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-digraph.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
