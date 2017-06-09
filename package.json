@@ -1,6 +1,6 @@
 {
   "name": "js-graph-algorithms",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Package implements data structures and algorithms for processing various types of graphs",
   "author": "Xianshun Chen",
   "contributors": [

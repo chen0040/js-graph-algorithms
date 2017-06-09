@@ -5,14 +5,14 @@ Package provides javascript implementation of algorithms for graph processing
 
 # Features
 
-* Depth First Search
+* Depth First Search (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-dfs.html))
 * Breadth First Search
-* Connected Components for undirected graph
-* Topoloical Sort
-* Strongly Connected Components for directed graph
-* Minimum Spanning Tree for weighted graph (Kruskal, Prim Lazy, Prim Eager)
-* Shortest Paths (Dijkstra, Bellman-Ford, Topological Sort on DAG)
-* MaxFlow-MinCut (Ford-Fulkerson)
+* Connected Components for undirected graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-connected-components.html))
+* Topoloical Sort (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-topo-sort.html))
+* Strongly Connected Components for directed graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-strongly-connected-components.html))
+* Minimum Spanning Tree for weighted graph (Kruskal, Prim Lazy, Prim Eager) (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-kruskal.html))
+* Shortest Paths (Dijkstra, Bellman-Ford, Topological Sort on DAG) (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-dijstra.html))
+* MaxFlow-MinCut (Ford-Fulkerson) (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-ford-fulkerson.html))
 
 # Install
 
