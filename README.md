@@ -501,7 +501,7 @@ for(var v = 1; v < g.V; ++v){
 
 ### Find the MaxFlow-MinCut using Ford-Fulkerson algorithm
 
-The sample code below show how to obtain the MaxFlow-MinCut of a directed weighted graph using ford-fulkerson algorithm:
+The sample code below show how to obtain the MaxFlow-MinCut of a directed weighted graph using ford-fulkerson algorithm (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-ford-fulkerson.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
@@ -521,6 +521,9 @@ g.addEdge(new jsgraphs.FlowEdge(5, 7, 10));
 g.addEdge(new jsgraphs.FlowEdge(5, 6, 15));
 g.addEdge(new jsgraphs.FlowEdge(6, 2, 6));
 g.addEdge(new jsgraphs.FlowEdge(6, 7, 10)); 
+
+g.node(2).label = 'Hello';
+g.edge(0, 1).label = 'World';
 
 var source = 0;
 var target = 7;

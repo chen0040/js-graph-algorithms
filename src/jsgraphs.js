@@ -573,9 +573,26 @@ var jsgraphs = jsgraphs || {};
     var FlowNetwork = function(V) {
         this.V = V;
         this.adjList = [];
+        this.nodeInfo = [];
         for(var v = 0; v < V; ++v) {
             this.adjList.push([]);
+            this.nodeInfo.push({});
         }
+    };
+    
+    FlowNetwork.prototype.node = function(v) {
+        return this.nodeInfo[v];
+    };
+    
+    FlowNetwork.prototype.edge = function(v, w) {
+        var adj_v = this.adjList[v];
+        for(var i=0; i < adj_v.length; ++i) {
+            var x = adj_v[i].other(v);
+            if(x == w) {
+                return adj_v[i];
+            }
+        }
+        return null;
     };
     
     FlowNetwork.prototype.addEdge = function(e) {
