@@ -899,13 +899,11 @@ var jsgraphs = jsgraphs || {};
         }
         this.mst = [];
         this.visit(G, 0);
-        while(!this.pq.isEmpty() && this.mst.length < V-1) {
+        while(!this.pq.isEmpty()) {
             var e = this.pq.minKey();
-            var v = this.pq.delMin();
+            var w = this.pq.delMin();
             
             this.mst.push(e);
-            
-            var w = e.other(v);
             
             if(!this.marked[w]){
                 this.visit(G, w);
@@ -920,6 +918,7 @@ var jsgraphs = jsgraphs || {};
         for(var i = 0; i < adj_v.length; ++i) {
             var e = adj_v[i];
             var w = e.other(v);
+            if(this.marked[w]) continue;
             if(this.pq.containsIndex(w)){
                 this.pq.decreaseKey(w, e);
             } else {
