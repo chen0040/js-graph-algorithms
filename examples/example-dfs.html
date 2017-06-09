@@ -14,8 +14,8 @@
         
         <script type="text/javascript">
             (function(){
-                var g = new jsgraphs.Graph(6); // 6 is the number vertices in the graph
-                g.addEdge(0, 5); // add undirected edge connecting vertex 0 to vertex 5
+                var g = new jsgraphs.Graph(6);
+                g.addEdge(0, 5);
                 g.addEdge(2, 4);
                 g.addEdge(2, 3);
                 g.addEdge(1, 2);
@@ -23,6 +23,11 @@
                 g.addEdge(3, 4);
                 g.addEdge(3, 5);
                 g.addEdge(0, 2);
+                var s = 0;
+                var dfs = new jsgraphs.DepthFirstSearch(g, s);
+
+
+                
 
                 var g_nodes = [];
                 var g_edges = [];
@@ -33,16 +38,24 @@
                        label: g.node(v).label
                     });
                     
-                    var adj_v = g.adj(v);
-                    for(var i = 0; i < adj_v.length; ++i) {
-                        var w = adj_v[i];
-                        if(w > v) continue; // make sure only one edge between w and v since the graph is undirected
-                        g_edges.push({
-                            from: v,
-                            to: w
-                        });
-                    };
+                    if(v != s && dfs.hasPathTo(v)) {
+                        console.log(s + " is connected to " + v);
+                        var path = dfs.pathTo(v);
+                        for(var j = 1; j < path.length; ++j) {
+                            var x1 = path[j-1];
+                            var x2 = path[j];
+                            g_edges.push({
+                                from: x1,
+                                to: x2,
+                                arrows: 'to'
+                            });
+                        }
+                     } else {
+                         console.log('No path from ' + s + ' to ' + v);
+                     }
+                    
                 }
+
 
                 console.log(g.V); // display 6, which is the number of vertices in g
                 console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0

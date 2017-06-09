@@ -86,7 +86,8 @@ console.log(g.adj(0)); // display the adjacency list which are vertices directed
 
 ### Create undirected weighted graph
 
-The sample code below shows show to create undirected weighted graph:
+The sample code below shows show to create undirected weighted graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-weighted-graph.html)):
+
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
@@ -117,7 +118,7 @@ console.log(g.adj(0)); // display the adjacency list which are undirected edges 
 
 ### Create directed weighted graph
 
-The sample code below shows show to create directed weighted graph:
+The sample code below shows show to create directed weighted graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-weighted-digraph.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
@@ -148,7 +149,7 @@ console.log(g.adj(0)); // display the adjacency list which are directed edges fr
 
 ### Depth First Search
 
-The sample code below show how to perform depth first search of an undirected graph
+The sample code below show how to perform depth first search of an undirected graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-dfs.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
