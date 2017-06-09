@@ -208,7 +208,7 @@ for (var v = 0; v < g.V; ++v) {
 
 ### Topological Sort
 
-The sample code below show how to obtain the reverse post order of a topological sort in a directed acyclic graph:
+The sample code below show how to obtain the reverse post order of a topological sort in a directed acyclic graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-topo-sort.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');

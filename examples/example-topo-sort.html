@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>
-            Depth First Search on Graph
+            Topological Sort on Directed Acyclic Graph
         </title>
         <script src="../third-party-libs/vis/vis.js" type="text/javascript"></script>
         <script src="../src/jsgraphs.js" type="text/javascript"></script>
@@ -9,26 +9,30 @@
     </head>
     
     <body>
-        <h2>Depth First Search on Graph</h2>
+        <h2>Topological Sort on Directed Acyclic Graph</h2>
         <div id="mynetwork"></div>
         
         <script type="text/javascript">
             (function(){
-                var g = new jsgraphs.Graph(6);
+                var g = new jsgraphs.DiGraph(7); // must be directed acyclic graph
+
                 g.addEdge(0, 5);
-                g.addEdge(2, 4);
-                g.addEdge(2, 3);
-                g.addEdge(1, 2);
-                g.addEdge(0, 1);
-                g.addEdge(3, 4);
-                g.addEdge(3, 5);
                 g.addEdge(0, 2);
-                var s = 0;
-                var dfs = new jsgraphs.DepthFirstSearch(g, s);
+                g.addEdge(0, 1);
+                g.addEdge(3, 6);
+                g.addEdge(3, 5);
+                g.addEdge(3, 4);
+                g.addEdge(5, 4);
+                g.addEdge(6, 4);
+                g.addEdge(6, 0);
+                g.addEdge(3, 2);
+                g.addEdge(1, 4);
 
+                var ts = new jsgraphs.TopologicalSort(g);
 
+                var order = ts.order();
+                console.log(order); // display array which is the topological sort order
                 
-
                 var g_nodes = [];
                 var g_edges = [];
                 for(var v=0; v < g.V; ++v){
@@ -38,24 +42,27 @@
                        label: g.node(v).label
                     });
                     
-                    if(v != s && dfs.hasPathTo(v)) {
-                        console.log(s + " is connected to " + v);
-                        var path = dfs.pathTo(v);
-                        for(var j = 1; j < path.length; ++j) {
-                            var x1 = path[j-1];
-                            var x2 = path[j];
-                            g_edges.push({
-                                from: x1,
-                                to: x2,
-                                arrows: 'to'
-                            });
-                        }
-                     } else {
-                         console.log('No path from ' + s + ' to ' + v);
-                     }
-                    
+                    var adj_v = g.adj(v);
+                    for(var i = 0; i < adj_v.length; ++i) {
+                        var w = adj_v[i];
+                        g_edges.push({
+                            from: v,
+                            to: w,
+                            arrows:'to'
+                        });
+                    };
                 }
-
+                
+                for(var i = 1; i < order.length; ++i) {
+                    var x1 = order[i-1];
+                    var x2 = order[i];
+                    g_edges.push({
+                        from: x1,
+                        to: x2,
+                        color: '#ff0000',
+                        arrows: 'to'
+                    })
+                }
 
                 console.log(g.V); // display 6, which is the number of vertices in g
                 console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0
