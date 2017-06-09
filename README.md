@@ -24,7 +24,7 @@ npm install js-graph-algorithms
 
 ### Create an undirected unweighted graph
 
-The sample code below shows how to create a undirected and unweighted graph:
+The sample code below shows how to create a undirected and unweighted graph (HTML DEMO at [HERE](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-graph.html):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');

@@ -13,31 +13,52 @@
         
         <script type="text/javascript">
             (function(){
-                var nodes = new vis.DataSet([
-                    {id: 1, label: 'Node 1'},
-                    {id: 2, label: 'Node 2'},
-                    {id: 3, label: 'Node 3'},
-                    {id: 4, label: 'Node 4'},
-                    {id: 5, label: 'Node 5'}
-                  ]);
+                var g = new jsgraphs.Graph(6); // 6 is the number vertices in the graph
+                g.addEdge(0, 5); // add undirected edge connecting vertex 0 to vertex 5
+                g.addEdge(2, 4);
+                g.addEdge(2, 3);
+                g.addEdge(1, 2);
+                g.addEdge(0, 1);
+                g.addEdge(3, 4);
+                g.addEdge(3, 5);
+                g.addEdge(0, 2);
 
-                  // create an array with edges
-                  var edges = new vis.DataSet([
-                    {from: 1, to: 3},
-                    {from: 1, to: 2},
-                    {from: 2, to: 4},
-                    {from: 2, to: 5},
-                    {from: 3, to: 3}
-                  ]);
+                var g_nodes = [];
+                var g_edges = [];
+                for(var v=0; v < g.V; ++v){
+                    g.node(v).label = 'Node ' + v; // assigned 'Node {v}' as label for node v
+                    g_nodes.push({
+                       id: v,
+                       label: g.node(v).label
+                    });
+                    
+                    var adj_v = g.adj(v);
+                    for(var i = 0; i < adj_v.length; ++i) {
+                        var w = adj_v[i];
+                        if(w > v) continue; // make sure only one edge between w and v since the graph is undirected
+                        g_edges.push({
+                            from: v,
+                            to: w
+                        });
+                    };
+                }
 
-                  // create a network
-                  var container = document.getElementById('mynetwork');
-                  var data = {
+                console.log(g.V); // display 6, which is the number of vertices in g
+                console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0
+                
+                var nodes = new vis.DataSet(g_nodes);
+
+                // create an array with edges
+                var edges = new vis.DataSet(g_edges);
+
+                // create a network
+                var container = document.getElementById('mynetwork');
+                var data = {
                     nodes: nodes,
                     edges: edges
-                  };
-                  var options = {};
-                  var network = new vis.Network(container, data, options);
+                };
+                var options = {};
+                var network = new vis.Network(container, data, options);
             })();
         </script>
     </body>
