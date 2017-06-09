@@ -21,6 +21,9 @@ describe('Weigthed Directed Graph', function(){
         g.addEdge(new jsgraphs.Edge(7, 5, 6.0));
         g.addEdge(new jsgraphs.Edge(7, 2, 7.0));  
        
+        g.node(4).label = 'Hello';
+        g.edge(4, 5).label = 'World';
+       
         expect(g.V).to.equal(8);
         var edgeCount = 0;
         for(var v = 0; v < g.V; ++v){

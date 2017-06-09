@@ -20,6 +20,10 @@ describe("Create various types of Weighted Graphs", function() {
     g.addEdge(new jsgraphs.Edge(3, 6, 0.52));
     g.addEdge(new jsgraphs.Edge(6, 0, 0.58));
     g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
+      
+    g.node(4).label = 'Hello';
+    g.edge(4, 5).label = 'World';
+      
     it("should has 8 vertices", function() {
     	expect(g.V).to.equal(8); 
     });

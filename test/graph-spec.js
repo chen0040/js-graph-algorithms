@@ -12,6 +12,7 @@ describe("Create various types of Graphs", function() {
     g.addEdge(3, 4);
     g.addEdge(3, 5);
     g.addEdge(0, 2);
+    g.node(2).label = 'Hello';
     it("should has 6 vertices", function() {
     	expect(g.V).to.equal(6); 
     });

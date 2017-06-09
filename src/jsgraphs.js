@@ -345,18 +345,41 @@ var jsgraphs = jsgraphs || {};
 	var Graph = function (V) {
         this.V = V;
         this.adjList = [];
+        this.nodeInfo = [];
+        this.edges = {};
         for (var i = 0; i < V; ++i) {
             this.adjList.push([]);
+            this.nodeInfo.push({});
         }
     };
     
     Graph.prototype.addEdge = function(v, w){
         this.adjList[v].push(w);
         this.adjList[w].push(v);
+        var edge_id = v + '_' + w;
+        if(v > w) {
+            edge_id = w + '_' + v;
+        }
+        this.edges[edge_id] = new jss.Edge(v, w, 0);
     };
     
     Graph.prototype.adj = function(v) {
         return this.adjList[v];  
+    };
+    
+    Graph.prototype.node = function(v) {
+        return this.nodeInfo[v];  
+    };
+    
+    Graph.prototype.edge = function(v, w) {
+        var edge_id = v + '_' + w;
+        if(v > w) {
+            edge_id = w + '_' + v;
+        }
+        if (edge_id in this.edges) {
+            return this.edges[edge_id];
+        }
+        return null;
     };
     
     jss.Graph = Graph;
@@ -364,17 +387,35 @@ var jsgraphs = jsgraphs || {};
     var DiGraph = function(V) {
         this.V = V;
         this.adjList = [];
+        this.nodeInfo = [];
+        this.edges = {};
         for (var v = 0; v < V; ++v){
             this.adjList.push([]);
+            this.nodeInfo.push({});
         }
     };
     
     DiGraph.prototype.addEdge = function(v, w){
         this.adjList[v].push(w);
+        var edge_id = v + '_' + w;
+        this.edges[edge_id] = new jss.Edge(v, w, 0);
+    };
+    
+    DiGraph.prototype.edge = function(v, w) {
+        var edge_id = v + '_' + w;
+        if(edge_id in this.edges) {
+            return this.edges[edge_id];
+        } else {
+            return null;
+        }
     };
     
     DiGraph.prototype.adj = function(v) {
         return this.adjList[v];  
+    };
+    
+    DiGraph.prototype.node = function(v) {
+        return this.nodeInfo[v];  
     };
     
     DiGraph.prototype.reverse = function(){
@@ -418,14 +459,31 @@ var jsgraphs = jsgraphs || {};
     var WeightedGraph = function(V) {
         this.V = V;
         this.adjList = [];
+        this.nodeInfo = [];
         
         for ( var v = 0; v < V; ++v) {
             this.adjList.push([]);
+            this.nodeInfo.push({});
         }
     };
     
     WeightedGraph.prototype.adj = function(v) {
         return this.adjList[v];  
+    };
+    
+    WeightedGraph.prototype.edge = function(v, w) {
+        var adj_v = this.adjList[v];
+        for(var i=0; i < adj_v.length; ++i) {
+            var x = adj_v[i].other(v);
+            if(x == w) {
+                return adj_v[i];
+            }
+        }
+        return null;
+    };
+    
+    WeightedGraph.prototype.node = function(v) {
+        return this.nodeInfo[v];  
     };
     
     WeightedGraph.prototype.addEdge = function(e) {
@@ -446,6 +504,17 @@ var jsgraphs = jsgraphs || {};
     WeightedDiGraph.prototype.addEdge = function(e) {
         var v = e.from();
         this.adjList[v].push(e);
+    };
+    
+    WeightedDiGraph.prototype.edge = function(v, w) {
+        var adj_v = this.adjList[v];
+        for(var i=0; i < adj_v.length; ++i) {
+            var x = adj_v[i].other(v);
+            if(x == w) {
+                return adj_v[i];
+            }
+        }
+        return null;
     };
     
     WeightedDiGraph.prototype.toDiGraph = function() {

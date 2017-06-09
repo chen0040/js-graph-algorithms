@@ -29,7 +29,7 @@ The sample code below shows how to create a undirected and unweighted graph:
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
 
-var g = new jsgraphs.Graph(6);
+var g = new jsgraphs.Graph(6); // 6 is the number vertices in the graph
 g.addEdge(0, 5); // add undirected edge connecting vertex 0 to vertex 5
 g.addEdge(2, 4);
 g.addEdge(2, 3);
@@ -38,6 +38,9 @@ g.addEdge(0, 1);
 g.addEdge(3, 4);
 g.addEdge(3, 5);
 g.addEdge(0, 2);
+
+g.node(2).label = 'Hello'; // assigned 'Hello' as label for node 2
+g.edge(0, 2).label = 'World'; // edge between 0 and 2
 
 console.log(g.V); // display 6, which is the number of vertices in g
 console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0
@@ -50,7 +53,7 @@ The sample code below shows how to create a direted and unweighted graph:
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
 
-var g = new jsgraphs.DiGraph(13);
+var g = new jsgraphs.DiGraph(13); // 13 is the number vertices in the graph
 g.addEdge(4,  2); // add directed edge from 4 to 2
 g.addEdge(2,  3);
 g.addEdge(3,  2);
@@ -74,6 +77,9 @@ g.addEdge(6,  4);
 g.addEdge(6,  9);
 g.addEdge(7,  6);
 
+g.node(2).label = 'Hello'; // assign 'Hello' as label for node 2
+g.edge(0, 5).label = 'World'; // edge from 0 to 5
+
 console.log(g.V); // display 13, which is the number of vertices in g
 console.log(g.adj(0)); // display the adjacency list which are vertices directed from vertex 0
 ```
@@ -84,7 +90,7 @@ The sample code below shows show to create undirected weighted graph:
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
-var g = new jsgraphs.WeightedGraph(8);
+var g = new jsgraphs.WeightedGraph(8); // 8 is the number vertices in the graph
 g.addEdge(new jsgraphs.Edge(0, 7, 0.16));
 g.addEdge(new jsgraphs.Edge(2, 3, 0.17));
 g.addEdge(new jsgraphs.Edge(1, 7, 0.19));
@@ -101,6 +107,9 @@ g.addEdge(new jsgraphs.Edge(6, 2, 0.4));
 g.addEdge(new jsgraphs.Edge(3, 6, 0.52));
 g.addEdge(new jsgraphs.Edge(6, 0, 0.58));
 g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
+
+g.node(2).label = 'Hello'; // assign 'Hello' as label for node 2
+g.edge(4, 5).label = 'World'; // edge between node 4 and 5
 
 console.log(g.V); // display 13, which is the number of vertices in g
 console.log(g.adj(0)); // display the adjacency list which are undirected edges connected to vertex 0
@@ -112,7 +121,7 @@ The sample code below shows show to create directed weighted graph:
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
-var g = new jsgraphs.WeightedDiGraph(8);
+var g = new jsgraphs.WeightedDiGraph(8); // 8 is the number vertices in the graph
 g.addEdge(new jsgraphs.Edge(0, 7, 0.16));
 g.addEdge(new jsgraphs.Edge(2, 3, 0.17));
 g.addEdge(new jsgraphs.Edge(1, 7, 0.19));
@@ -129,6 +138,9 @@ g.addEdge(new jsgraphs.Edge(6, 2, 0.4));
 g.addEdge(new jsgraphs.Edge(3, 6, 0.52));
 g.addEdge(new jsgraphs.Edge(6, 0, 0.58));
 g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
+
+g.node(2).label = 'Hello';
+g.edge(4, 5).label = 'World'; // edge from node 4 to node 5
 
 console.log(g.V); // display 13, which is the number of vertices in g
 console.log(g.adj(0)); // display the adjacency list which are directed edges from vertex 0

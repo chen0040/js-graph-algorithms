@@ -26,6 +26,8 @@ describe("Create various types of DiGraph", function() {
     g.addEdge(6,  4);
     g.addEdge(6,  9);
     g.addEdge(7,  6);
+      
+    g.edge(2, 0).label = 'World';
     it("should has 13 vertices", function() {
     	expect(g.V).to.equal(13); 
     });
