@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>
+            Minimum Spanning Tree Weighted Graph (Kruskal)
+        </title>
+        <script src="../third-party-libs/vis/vis.js" type="text/javascript"></script>
+        <script src="../src/jsgraphs.js" type="text/javascript"></script>
+        <link href="../third-party-libs/vis/vis.css" type="text/css" />
+    </head>
+    
+    <body>
+        <h2>Minimum Spanning Tree Weighted Graph (Kruskal)</h2>
+        <div id="mynetwork"></div>
+        
+        <script type="text/javascript">
+            (function(){
+                var g = new jsgraphs.WeightedGraph(8);
+
+                g.addEdge(new jsgraphs.Edge(0, 7, 0.16));
+                g.addEdge(new jsgraphs.Edge(2, 3, 0.17));
+                g.addEdge(new jsgraphs.Edge(1, 7, 0.19));
+                g.addEdge(new jsgraphs.Edge(0, 2, 0.26));
+                g.addEdge(new jsgraphs.Edge(5, 7, 0.28));
+                g.addEdge(new jsgraphs.Edge(1, 3, 0.29));
+                g.addEdge(new jsgraphs.Edge(1, 5, 0.32));
+                g.addEdge(new jsgraphs.Edge(2, 7, 0.34));
+                g.addEdge(new jsgraphs.Edge(4, 5, 0.35));
+                g.addEdge(new jsgraphs.Edge(1, 2, 0.36));
+                g.addEdge(new jsgraphs.Edge(4, 7, 0.37));
+                g.addEdge(new jsgraphs.Edge(0, 4, 0.38));
+                g.addEdge(new jsgraphs.Edge(6, 2, 0.4));
+                g.addEdge(new jsgraphs.Edge(3, 6, 0.52));
+                g.addEdge(new jsgraphs.Edge(6, 0, 0.58));
+                g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
+
+                var kruskal = new jsgraphs.KruskalMST(g); 
+                var mst = kruskal.mst;
+                
+
+                var g_nodes = [];
+                var g_edges = [];
+                for(var v=0; v < g.V; ++v){
+                    g.node(v).label = 'Node ' + v; // assigned 'Node {v}' as label for node v
+                    g_nodes.push({
+                       id: v,
+                       label: g.node(v).label
+                    });
+                }
+                
+                for(var i=0; i < mst.length; ++i) {
+                    var e = mst[i];
+                    var v = e.either();
+                    var w = e.other(v);
+                    e.highlighted = true;
+                    console.log('(' + v + ', ' + w + '): ' + e.weight);
+                    g_edges.push({
+                        from: v,
+                        to: w,
+                        length: e.weight,
+                        label: '' + e.weight,
+                        color: '#ff0000',
+                        value: 2
+                    });
+                }
+                
+                for(var v = 0; v < g.V; ++v) {
+                    
+                    var adj_v = g.adj(v);
+                    for(var i = 0; i < adj_v.length; ++i) {
+                        var e = adj_v[i];
+                        var w = e.other(v);
+                        if(w > v) continue; // make sure only one edge between w and v since the graph is undirected
+                        if(e.highlighted) continue;
+                        
+                        g_edges.push({
+                            from: v,
+                            to: w,
+                            length: e.weight,
+                            label: '' + e.weight
+                        });
+                    };
+                }
+
+                console.log(g.V); // display 6, which is the number of vertices in g
+                console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0
+                
+                var nodes = new vis.DataSet(g_nodes);
+
+                // create an array with edges
+                var edges = new vis.DataSet(g_edges);
+
+                // create a network
+                var container = document.getElementById('mynetwork');
+                var data = {
+                    nodes: nodes,
+                    edges: edges
+                };
+                var options = {};
+                var network = new vis.Network(container, data, options);
+            })();
+        </script>
+    </body>
+</html>

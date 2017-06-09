@@ -33,18 +33,38 @@
                 var order = ts.order();
                 console.log(order); // display array which is the topological sort order
                 
+                
+                
                 var g_nodes = [];
                 var g_edges = [];
+                
+                
+                
                 for(var v=0; v < g.V; ++v){
                     g.node(v).label = 'Node ' + v; // assigned 'Node {v}' as label for node v
                     g_nodes.push({
                        id: v,
                        label: g.node(v).label
                     });
-                    
+                }
+                
+                for(var i = 1; i < order.length; ++i) {
+                    var x1 = order[i-1];
+                    var x2 = order[i];
+                    if(g.edge(x1, x2) != null) g.edge(x1, x2).highlighted = true;
+                    g_edges.push({
+                        from: x1,
+                        to: x2,
+                        color: '#ff0000',
+                        arrows: 'to'
+                    })
+                }
+                
+                for(var v= 0; v < g.V; ++v) {
                     var adj_v = g.adj(v);
                     for(var i = 0; i < adj_v.length; ++i) {
                         var w = adj_v[i];
+                        if(g.edge(v, w).highlighted) continue;
                         g_edges.push({
                             from: v,
                             to: w,
@@ -53,16 +73,7 @@
                     };
                 }
                 
-                for(var i = 1; i < order.length; ++i) {
-                    var x1 = order[i-1];
-                    var x2 = order[i];
-                    g_edges.push({
-                        from: x1,
-                        to: x2,
-                        color: '#ff0000',
-                        arrows: 'to'
-                    })
-                }
+
 
                 console.log(g.V); // display 6, which is the number of vertices in g
                 console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0
