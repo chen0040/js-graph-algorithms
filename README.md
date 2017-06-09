@@ -179,7 +179,7 @@ for(var v=0; v < g.V; ++v) {
 
 ### Connected Components
 
-The sample code below show how to obtain the number of connected components in an undirected graph:
+The sample code below show how to obtain the number of connected components in an undirected graph  (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-connected-components.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
