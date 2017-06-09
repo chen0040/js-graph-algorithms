@@ -236,7 +236,7 @@ console.log(order); // display array which is the topological sort order
 
 ### Strongly Connected Components for Directed Graph
 
-The sample code below show how to obtain the strongly connected components from a directed graph:
+The sample code below show how to obtain the strongly connected components from a directed graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-strongly-connected-components.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');

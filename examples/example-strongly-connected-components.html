@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>
+            Strongly Connected Components on Graph
+        </title>
+        <script src="../third-party-libs/vis/vis.js" type="text/javascript"></script>
+        <script src="../src/jsgraphs.js" type="text/javascript"></script>
+        <link href="../third-party-libs/vis/vis.css" type="text/css" />
+    </head>
+    
+    <body>
+        <h2>Strongly Connected Components on Graph</h2>
+        <div id="mynetwork"></div>
+        
+        <script type="text/javascript">
+            (function(){
+                var g = new jsgraphs.DiGraph(13);
+                g.addEdge(4, 2);
+                g.addEdge(2, 3);
+                g.addEdge(3, 2);
+                g.addEdge(6, 0);
+                g.addEdge(0, 1);
+                g.addEdge(2, 0);
+                g.addEdge(11, 12);
+                g.addEdge(12, 9);
+                g.addEdge(9, 10);
+                g.addEdge(9, 11);
+                g.addEdge(8, 9);
+                g.addEdge(10, 12);
+                g.addEdge(11, 4);
+                g.addEdge(4, 3);
+                g.addEdge(3, 5);
+                g.addEdge(7, 8);
+                g.addEdge(8, 7);
+                g.addEdge(5, 4);
+                g.addEdge(0, 5);
+                g.addEdge(6, 4);
+                g.addEdge(6, 9);
+                g.addEdge(7, 6);
+                var scc = new jsgraphs.StronglyConnectedComponents(g);
+                console.log(scc.componentCount()); // display 5
+                for (var v = 0; v < g.V; ++v) {
+                    console.log('id[' + v + ']: ' + scc.componentId(v));
+                }
+
+                var g_nodes = [];
+                var g_edges = [];
+                for(var v=0; v < g.V; ++v){
+                    g.node(v).label = 'Node ' + v; // assigned 'Node {v}' as label for node v
+                    g_nodes.push({
+                       id: v,
+                       label: g.node(v).label,
+                       group: scc.componentId(v)
+                    });
+                    
+                    var adj_v = g.adj(v);
+                    for(var i = 0; i < adj_v.length; ++i) {
+                        var w = adj_v[i];
+                        g_edges.push({
+                            from: v,
+                            to: w,
+                            arrows: 'to'
+                        });
+                    };
+                }
+
+                console.log(g.V); // display 6, which is the number of vertices in g
+                console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0
+                
+                var nodes = new vis.DataSet(g_nodes);
+
+                // create an array with edges
+                var edges = new vis.DataSet(g_edges);
+
+                // create a network
+                var container = document.getElementById('mynetwork');
+                var data = {
+                    nodes: nodes,
+                    edges: edges
+                };
+                var options = {};
+                var network = new vis.Network(container, data, options);
+            })();
+        </script>
+    </body>
+</html>
