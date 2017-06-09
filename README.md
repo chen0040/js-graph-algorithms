@@ -378,7 +378,7 @@ for(var i=0; i < mst.length; ++i) {
 
 ### Find the shortest paths using Dijkstra
 
-The sample code below show how to obtain the shortest paths from a starting point 0 on a weighted directed graph using Dijkstra:
+The sample code below show how to obtain the shortest paths from a starting point 0 on a weighted directed graph using Dijkstra (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-dijstra.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
