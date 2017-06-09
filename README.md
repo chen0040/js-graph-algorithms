@@ -308,7 +308,7 @@ for(var i=0; i < mst.length; ++i) {
 
 ### Use Lazy Prim algorithm to find the minimum spanning tree of a weighted graph
 
-The sample code below show how to obtain the minimum spanning tree from a weighted graph using Lazy Prim algorithm:
+The sample code below show how to obtain the minimum spanning tree from a weighted graph using Lazy Prim algorithm (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-lazy-prim.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
