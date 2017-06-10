@@ -73,6 +73,7 @@
                     for(var i = 0; i < adj_v.length; ++i) {
                         var e = adj_v[i];
                         var w = e.other(v);
+                        if(w != e.to()) continue;
                         if(e.highlighted) continue;
                         g_edges.push({
                             from: v,

@@ -20,6 +20,9 @@ describe('MaxFlow-MinCut', function(){
         g.addEdge(new jsgraphs.FlowEdge(6, 2, 6));
         g.addEdge(new jsgraphs.FlowEdge(6, 7, 10)); 
        
+        g.node(2).label = 'Hello';
+        g.edge(0, 1).label = 'World';
+       
         var source = 0;
         var target = 7;
         var ff = new jsgraphs.FordFulkerson(g, source, target);
