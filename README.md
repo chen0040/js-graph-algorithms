@@ -11,7 +11,7 @@ Package provides javascript implementation of algorithms for graph processing
 * Topoloical Sort (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-topo-sort.html))
 * Strongly Connected Components for directed graph (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-strongly-connected-components.html))
 * Minimum Spanning Tree for weighted graph (Kruskal, Prim Lazy, Prim Eager) (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-kruskal.html))
-* Shortest Paths (Dijkstra, Bellman-Ford, Topological Sort on DAG) (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-dijstra.html))
+* Shortest Paths (Dijkstra, Bellman-Ford, Topological Sort on DAG) (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-dijkstra.html))
 * MaxFlow-MinCut (Ford-Fulkerson) (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-ford-fulkerson.html))
 
 # Install
@@ -378,7 +378,7 @@ for(var i=0; i < mst.length; ++i) {
 
 ### Find the shortest paths using Dijkstra
 
-The sample code below show how to obtain the shortest paths from a starting point 0 on a weighted directed graph using Dijkstra (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-dijstra.html)):
+The sample code below show how to obtain the shortest paths from a starting point 0 on a weighted directed graph using Dijkstra (Link: [HTML DEMO](https://rawgit.com/chen0040/js-graph-algorithms/master/examples/example-dijkstra.html)):
 
 ```javascript
 var jsgraphs = require('js-graph-algorithms');
