@@ -250,3 +250,7 @@ declare namespace JsGraphs {
         minCut(G: FlowNetwork): FlowEdge[];
     }
 }
+
+declare module "js-graph-algorithms" {
+  export = JsGraphs;
+}
