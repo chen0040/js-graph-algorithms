@@ -1,13 +1,13 @@
 {
   "name": "js-graph-algorithms",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Package implements data structures and algorithms for processing various types of graphs",
   "author": "Xianshun Chen",
   "contributors": [
     "Xianshun Chen <xs0040@gmail.com>"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "./src/jsgraphs.js",
   "typings": "src/jsgraphs.d.ts",
   "directories": {
     "test": "test"
