@@ -1135,11 +1135,11 @@ var jsgraphs = jsgraphs || {};
         this.t = t;
         while(this.hasAugmentedPath(G)){
             
-            for(var x = this.t; x != this.s; x = this.edgeTo[x].from()) {
+            for(var x = this.t; x != this.s; x = this.edgeTo[x].other(x)) {
                 bottle = Math.min(bottle, this.edgeTo[x].residualCapacityTo(x));
             }
             
-            for(var x = this.t; x != this.s; x = this.edgeTo[x].from()) {
+            for(var x = this.t; x != this.s; x = this.edgeTo[x].other(x)) {
                 this.edgeTo[x].addResidualFlowTo(x, bottle);
             }
             
