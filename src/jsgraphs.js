@@ -989,7 +989,7 @@ var jsgraphs = jsgraphs || {};
     
     Dijkstra.prototype.pathTo = function(v) {
         var path = new jss.Stack();
-        for(var x = v; x != this.s; x = this.edgeTo[x].from()) {
+        for(var x = v; x != this.s; x = this.edgeTo[x].other(x)) {
             path.push(this.edgeTo[x]);
         }  
         return path.toArray();
@@ -1050,7 +1050,7 @@ var jsgraphs = jsgraphs || {};
     
     BellmanFord.prototype.pathTo = function(v) {
         var path = new jss.Stack();
-        for(var x = v; x != this.s; x = this.edgeTo[x].from()) {
+        for(var x = v; x != this.s; x = this.edgeTo[x].other(x)) {
             path.push(this.edgeTo[x]);
         }  
         return path.toArray();
@@ -1113,7 +1113,7 @@ var jsgraphs = jsgraphs || {};
     
     TopologicalSortShortestPaths.prototype.pathTo = function(v) {
         var path = new jss.Stack();
-        for(var x = v; x != this.s; x = this.edgeTo[x].from()) {
+        for(var x = v; x != this.s; x = this.edgeTo[x].other(x)) {
             path.push(this.edgeTo[x]);
         }  
         return path.toArray();
