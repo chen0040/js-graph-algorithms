@@ -71,7 +71,7 @@ var jsgraphs = jsgraphs || {};
     
     Stack.prototype.toArray = function() {
         var result = [];
-        x = this.first;
+        var x = this.first;
         while (x != null) {
             result.push(x.value);
             x = x.next;
