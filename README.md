@@ -112,7 +112,7 @@ g.addEdge(new jsgraphs.Edge(6, 4, 0.93));
 g.node(2).label = 'Hello'; // assign 'Hello' as label for node 2
 g.edge(4, 5).label = 'World'; // edge between node 4 and 5
 
-console.log(g.V); // display 13, which is the number of vertices in g
+console.log(g.V); // display 8, which is the number of vertices in g
 console.log(g.adj(0)); // display the adjacency list which are undirected edges connected to vertex 0
 ```
 
